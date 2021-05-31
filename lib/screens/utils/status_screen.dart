@@ -5,15 +5,26 @@ import 'package:flutter/material.dart';
 class StatusScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
+    return Container(
+      height: 200,
+      width: 250,
+      child: Column(
         children: [
           Expanded(
             child: ListView(
               children: [
-                Center(
-                  child: Text(
-                      'You have been successfully signed up.Exit and login again'),
+                Padding(
+                  padding: const EdgeInsets.only(
+                      top: 20, left: 30, right: 30, bottom: 10),
+                  child: Center(
+                    child: Text(
+                      'You have been successfully signed up.Exit and login again',
+                      style: TextStyle(
+                          color: Colors.green,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 15),
+                    ),
+                  ),
                 ),
                 GestureDetector(
                     onTap: () {
@@ -21,7 +32,10 @@ class StatusScreen extends StatelessWidget {
                           builder: (context) => SignInSignUP()));
                     },
                     child: Center(
-                      child: Text('Click here'),
+                      child: Text(
+                        'Click here',
+                        style: TextStyle(color: Colors.red),
+                      ),
                     ))
               ],
             ),

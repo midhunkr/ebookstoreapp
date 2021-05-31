@@ -3,6 +3,7 @@ import 'package:ecommerceapp/db/booksdb.dart';
 import 'package:ecommerceapp/model/user.dart';
 import 'package:ecommerceapp/screens/Admin/adminhome.dart';
 import 'package:ecommerceapp/screens/Home/home_screen.dart';
+import 'package:ecommerceapp/screens/signup.dart';
 import 'package:ecommerceapp/screens/welcome.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -131,10 +132,11 @@ class _SignInSignUPState extends State<SignInSignUP> {
                       padding: EdgeInsets.only(left: 20, right: 20, top: 10),
                       child: GestureDetector(
                         onTap: () async {
+                          print('Hi');
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => SignInSignUP()));
+                                  builder: (context) => SignUp()));
                           // print(user.userId);
                         },
                         child: Container(

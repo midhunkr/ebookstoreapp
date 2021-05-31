@@ -25,7 +25,15 @@ class BooksDB {
   Future _createDB(Database db, int version) async {
     List<User> userListTemp = [
       User(
-          userId: 1, userType: 'user', password: 'fermions', username: 'midhun')
+          userId: 1,
+          userType: 'user',
+          password: 'fermions',
+          username: 'midhun'),
+      User(
+          password: 'midhunkr',
+          userType: 'admin',
+          userId: 3,
+          username: 'midhunkr')
     ];
     List<Books> bookListTemp = [
       Books(
@@ -120,6 +128,7 @@ CREATE TABLE $tableBooks(
     final jid4 = await db.insert(tableBooks, bookListTemp[4].toJson());
     final jid5 = await db.insert(tableBooks, bookListTemp[5].toJson());
     final jid6 = await db.insert(userTable, userListTemp[0].toJson());
+    final jid7 = await db.insert(userTable, userListTemp[1].toJson());
   }
 
   Future<int> deletePurchasedBooks() async {

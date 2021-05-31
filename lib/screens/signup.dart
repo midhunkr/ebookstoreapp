@@ -1,5 +1,6 @@
 import 'package:ecommerceapp/db/booksdb.dart';
 import 'package:ecommerceapp/model/user.dart';
+import 'package:ecommerceapp/screens/utils/status_screen.dart';
 import 'package:flutter/material.dart';
 
 class SignUp extends StatefulWidget {
@@ -8,10 +9,11 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
-  @override
   String username;
   String password;
   int userid;
+  bool crctCredentials = false;
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
@@ -19,9 +21,16 @@ class _SignUpState extends State<SignUp> {
           children: [
             Expanded(
                 child: ListView(children: [
-              Text('Sign Up'),
+              Padding(
+                padding: const EdgeInsets.only(top: 50),
+                child: Center(
+                  child: Text('Sign Up',
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
+                ),
+              ),
               Container(
-                padding: EdgeInsets.fromLTRB(20, 30, 20, 15),
+                padding: EdgeInsets.fromLTRB(20, 30, 20, 5),
                 child: TextField(
                   onSubmitted: (String value) {
                     username = value;
@@ -46,6 +55,20 @@ class _SignUpState extends State<SignUp> {
                   ),
                 ),
               ),
+              Container(
+                padding: EdgeInsets.fromLTRB(20, 0, 20, 5),
+                child: TextField(
+                  keyboardType: TextInputType.number,
+                  obscureText: false,
+                  onSubmitted: (String value) {
+                    userid = int.parse(value);
+                  },
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'userid',
+                  ),
+                ),
+              ),
               Padding(
                   padding: EdgeInsets.only(left: 20, right: 20, top: 10),
                   child: GestureDetector(
@@ -53,12 +76,17 @@ class _SignUpState extends State<SignUp> {
                       if (userid != null &&
                           password != null &&
                           password != null) {
+                        print(
+                            'the userid is $userid and the usernam is $username and the password is $password');
                         User user = User(
                             password: password,
                             userId: userid,
                             userType: 'user',
                             username: username);
                         BooksDB.booksdbInstance.insertUser(user);
+                        setState(() {
+                          crctCredentials = true;
+                        });
                       } else {}
 
                       // print(user.userId);
@@ -80,6 +108,7 @@ class _SignUpState extends State<SignUp> {
                       ),
                     ),
                   )),
+              if (crctCredentials) StatusScreen()
             ]))
           ],
         ),
