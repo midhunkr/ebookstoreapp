@@ -1,3 +1,5 @@
+import 'package:ecommerceapp/db/booksdb.dart';
+import 'package:ecommerceapp/model/user.dart';
 import 'package:flutter/material.dart';
 
 class SignUp extends StatefulWidget {
@@ -44,6 +46,40 @@ class _SignUpState extends State<SignUp> {
                   ),
                 ),
               ),
+              Padding(
+                  padding: EdgeInsets.only(left: 20, right: 20, top: 10),
+                  child: GestureDetector(
+                    onTap: () async {
+                      if (userid != null &&
+                          password != null &&
+                          password != null) {
+                        User user = User(
+                            password: password,
+                            userId: userid,
+                            userType: 'user',
+                            username: username);
+                        BooksDB.booksdbInstance.insertUser(user);
+                      } else {}
+
+                      // print(user.userId);
+                    },
+                    child: Container(
+                      height: 60,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          gradient: LinearGradient(
+                              begin: Alignment.centerLeft,
+                              end: Alignment.centerRight,
+                              colors: [Color(0xFFa7bbc7), Color(0xFFe1e5ea)])),
+                      child: Center(
+                        child: Text(
+                          'Sign Up',
+                          style: TextStyle(
+                              fontWeight: FontWeight.w400, fontSize: 18),
+                        ),
+                      ),
+                    ),
+                  )),
             ]))
           ],
         ),

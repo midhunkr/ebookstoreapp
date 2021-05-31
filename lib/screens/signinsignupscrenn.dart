@@ -134,7 +134,7 @@ class _SignInSignUPState extends State<SignInSignUP> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => AdminHome()));
+                                  builder: (context) => SignInSignUP()));
                           // print(user.userId);
                         },
                         child: Container(
