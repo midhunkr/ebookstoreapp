@@ -1,6 +1,10 @@
 # ecommerceapp
 
-A new Flutter project.
+A new Flutter project.This app enables the user to select books from a list of books and add it to his cart.The added book will get reflected in the home screen of user.
+Admin can add new books to the existing data base of books
+
+##DB package used:sqflite
+
 
 ## Getting Started
 
