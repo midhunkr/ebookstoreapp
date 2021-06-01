@@ -7,11 +7,20 @@ import '../Buy/buybookss.dart';
 import '../User/userhome.dart';
 
 class HomeScreen extends StatefulWidget {
+  final int userid;
+  HomeScreen({this.userid});
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  int userId;
+  @override
+  void initState() {
+    super.initState();
+    userId = widget.userid;
+  }
+
   int selectedValue = 0;
   Future refreshBooks() async {
     await BooksDB.booksdbInstance.database;
@@ -30,7 +39,11 @@ class _HomeScreenState extends State<HomeScreen> {
         }
       },
       child: Scaffold(
-        body: selectedValue == 1 ? BuyBooks() : UserBook(),
+        body: selectedValue == 1
+            ? BuyBooks(userid: userId)
+            : UserBook(
+                userid: userId,
+              ),
         bottomNavigationBar: BottomNavigationBar(
           onTap: (currentValue) {
             print(currentValue);

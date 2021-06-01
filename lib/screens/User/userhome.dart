@@ -5,6 +5,9 @@ import 'package:ecommerceapp/screens/utils/purchasedbookcard.dart';
 import 'package:flutter/material.dart';
 
 class UserBook extends StatefulWidget {
+  final int userid;
+  UserBook({this.userid});
+
   @override
   _UserBookState createState() => _UserBookState();
 }
@@ -12,7 +15,9 @@ class UserBook extends StatefulWidget {
 class _UserBookState extends State<UserBook> {
   List<Purchase> purchases;
   bool isLoading;
+  int userId;
   void initState() {
+    userId = widget.userid;
     super.initState();
     fetchInfo();
   }
@@ -21,7 +26,7 @@ class _UserBookState extends State<UserBook> {
     setState(() {
       isLoading = true;
     });
-    this.purchases = await BooksDB.booksdbInstance.readAllPurchases();
+    this.purchases = await BooksDB.booksdbInstance.readAllPurchases(userId);
     print('JkL');
     setState(() {
       isLoading = false;
@@ -44,8 +49,22 @@ class _UserBookState extends State<UserBook> {
                 ),
                 Container(
                   child: purchases.length == 0
-                      ? Text('No Books Purchased')
-                      : Text('Purchased Books'),
+                      ? Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            'No Books Purchased ',
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 16),
+                          ),
+                        )
+                      : Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            'Purchased Books',
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 16),
+                          ),
+                        ),
                 ),
                 Expanded(
                   child: ListView.builder(

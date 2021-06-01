@@ -100,10 +100,19 @@ class _SignInSignUPState extends State<SignInSignUP> {
                               //   wronguser = false;
                               // });
                               print(user.userType);
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => HomeScreen()));
+                              if (user.userType == 'admin') {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => AdminHome()));
+                              } else {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => HomeScreen(
+                                              userid: user.userId,
+                                            )));
+                              }
                             }
                           }
                           // print(user.userId);

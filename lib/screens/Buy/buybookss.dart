@@ -5,6 +5,8 @@ import 'package:ecommerceapp/screens/utils/customrappbar.dart';
 import 'package:flutter/material.dart';
 
 class BuyBooks extends StatefulWidget {
+  final int userid;
+  BuyBooks({this.userid});
   @override
   _BuysBooksState createState() => _BuysBooksState();
 }
@@ -12,7 +14,9 @@ class BuyBooks extends StatefulWidget {
 class _BuysBooksState extends State<BuyBooks> {
   List<Books> books;
   bool isLoading;
+  int userId;
   void initState() {
+    userId = widget.userid;
     super.initState();
     refreshBooksAgain();
   }
@@ -39,6 +43,7 @@ class _BuysBooksState extends State<BuyBooks> {
                       child: ListView.builder(
                     itemCount: books.length,
                     itemBuilder: (context, index) => BookCard(
+                      userid: userId,
                       nameofauthor: books[index].author,
                       nameofbook: books[index].title,
                       price: books[index].price,

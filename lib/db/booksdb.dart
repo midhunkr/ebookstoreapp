@@ -144,14 +144,17 @@ CREATE TABLE $tableBooks(
     final id = await db.insert(tablePurchase, purchase.toJson());
   }
 
-  Future<List<Purchase>> readAllPurchases() async {
+  Future<List<Purchase>> readAllPurchases(int userid) async {
     final db = await booksdbInstance.database;
 
     // final orderBy = '${BookFields.price} ASC';
     // final result =
     //     await db.rawQuery('SELECT * FROM $tableNotes ORDER BY $orderBy');
 
-    final result = await db.query(tablePurchase);
+    final result = await db.query(tablePurchase,
+        columns: PurchaseFields.values,
+        where: '${PurchaseFields.userid}=?',
+        whereArgs: [userid]);
 
     return result.map((json) => Purchase.fromJson(json)).toList();
   }

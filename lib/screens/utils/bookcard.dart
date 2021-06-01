@@ -5,12 +5,14 @@ import 'package:flutter/material.dart';
 
 class BookCard extends StatefulWidget {
   const BookCard({
+    this.userid,
     this.nameofauthor,
     this.nameofbook,
     this.price,
     this.bookid,
     Key key,
   }) : super(key: key);
+  final int userid;
   final String nameofbook;
   final String nameofauthor;
   final int bookid;
@@ -21,7 +23,13 @@ class BookCard extends StatefulWidget {
 }
 
 class _BookCardState extends State<BookCard> {
+  int userId;
   bool bought = false;
+  void initState() {
+    userId = widget.userid;
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -86,7 +94,7 @@ class _BookCardState extends State<BookCard> {
                           bookid: widget.bookid,
                           bookname: widget.nameofbook,
                           price: widget.price,
-                          userid: 10);
+                          userid: userId);
                       await BooksDB.booksdbInstance.insertPurchase(purchase);
                       print('Hi');
                       setState(() {
