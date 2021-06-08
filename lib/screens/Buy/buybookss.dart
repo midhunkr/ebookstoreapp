@@ -1,8 +1,10 @@
+import 'package:ecommerceapp/cubit/newcubit_cubit.dart';
 import 'package:ecommerceapp/db/booksdb.dart';
 import 'package:ecommerceapp/model/books.dart';
 import 'package:ecommerceapp/screens/utils/bookcard.dart';
 import 'package:ecommerceapp/screens/utils/customrappbar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class BuyBooks extends StatefulWidget {
   final int userid;
@@ -18,38 +20,41 @@ class _BuysBooksState extends State<BuyBooks> {
   void initState() {
     userId = widget.userid;
     super.initState();
-    refreshBooksAgain();
+    BlocProvider.of<NewcubitCubit>(context).fetchAllBooks();
   }
 
-  Future refreshBooksAgain() async {
-    setState(() => isLoading = true);
-
-    this.books = await BooksDB.booksdbInstance.readAllBooks();
-
-    setState(() => isLoading = false);
+  Widget conditionalBookList(NewcubitState state) {
+    if (state is BooksLoading) {
+      return CircularProgressIndicator();
+    } else if (state is BooksLoaded) {
+      return Column(
+        children: [
+          CustomAppbar(
+            textl: 'Buy Books',
+          ),
+          Expanded(
+              child: ListView.builder(
+            itemCount: state.books.length,
+            itemBuilder: (context, index) => BookCard(
+              userid: userId,
+              nameofauthor: state.books[index].author,
+              nameofbook: state.books[index].title,
+              price: state.books[index].price,
+            ),
+          )),
+        ],
+      );
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-        child: isLoading == true
-            ? Center(child: CircularProgressIndicator())
-            : Column(
-                children: [
-                  CustomAppbar(
-                    textl: 'Buy Books',
-                  ),
-                  Expanded(
-                      child: ListView.builder(
-                    itemCount: books.length,
-                    itemBuilder: (context, index) => BookCard(
-                      userid: userId,
-                      nameofauthor: books[index].author,
-                      nameofbook: books[index].title,
-                      price: books[index].price,
-                    ),
-                  )),
-                ],
-              ));
+    return BlocBuilder<NewcubitCubit, NewcubitState>(
+      builder: (context, state) {
+        return SafeArea(
+          child: conditionalBookList(state),
+        );
+      },
+    );
   }
 }
